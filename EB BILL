@@ -1,0 +1,74 @@
+import java.util.Scanner;
+class ElectricityBill {
+ private int consumerNumber;
+ private String consumerName;
+ private int prevMonthReading;
+ private int currentMonthReading;
+ private String ebConnectionType;
+ public ElectricityBill(int consumerNumber, String consumerName, int prevMonthReading, int 
+currentMonthReading, String ebConnectionType) {
+ this.consumerNumber = consumerNumber;
+ this.consumerName = consumerName;
+ this.prevMonthReading = prevMonthReading;
+ this.currentMonthReading = currentMonthReading;
+ this.ebConnectionType = ebConnectionType;
+ }
+ public double calculateBillAmount() {
+ int unitsConsumed = currentMonthReading - prevMonthReading;
+ double billAmount = 0;
+ if (ebConnectionType.equalsIgnoreCase("domestic")) {
+ if (unitsConsumed <= 100) {
+ billAmount = unitsConsumed * 1.50;
+ } else if (unitsConsumed <= 200) {
+ billAmount = 100 * 1.50 + (unitsConsumed - 100) * 3.0;
+ } else if (unitsConsumed <= 500) {
+ billAmount = 100 * 1.50 + 100 * 3.0 + (unitsConsumed - 200) * 4.50;
+ } else {
+ billAmount = 100 * 1.50 + 100 * 3.0 + 300 * 4.50 + (unitsConsumed - 500) * 7.0;
+ }
+ } else if (ebConnectionType.equalsIgnoreCase("commercial")) {
+ if (unitsConsumed <= 100) {
+ billAmount = unitsConsumed * 2.50;
+ } else if (unitsConsumed <= 200) {
+ billAmount = 100 * 2.50 + (unitsConsumed - 100) * 5.0;
+ } else if (unitsConsumed <= 500) {
+ billAmount = 100 * 2.50 + 100 * 5.0 + (unitsConsumed - 200) * 6.50;
+ } else {
+ billAmount = 100 * 2.50 + 100 * 5.0 + 300 * 6.50 + (unitsConsumed - 500) * 9.0;
+ }
+ }
+ return billAmount;
+ }
+ public void displayBill() {
+ System.out.println("Consumer Number: " + consumerNumber);
+ System.out.println("Consumer Name: " + consumerName);
+ System.out.println("Previous Month Reading: " + prevMonthReading);
+ System.out.println("Current Month Reading: " + currentMonthReading);
+ System.out.println("EB Connection Type: " + ebConnectionType);
+ System.out.println("Bill Amount: Rs. " + calculateBillAmount());
+ }
+ public static void main(String[] args) {
+ Scanner scanner = new Scanner(System.in);
+ 
+ System.out.print("Enter Consumer Number: ");
+ int consumerNumber = scanner.nextInt();
+ 
+ System.out.print("Enter Consumer Name: ");
+ String consumerName = scanner.next();
+ 
+ System.out.print("Enter Previous Month Reading: ");
+ int prevMonthReading = scanner.nextInt();
+ 
+ System.out.print("Enter Current Month Reading: ");
+ int currentMonthReading = scanner.nextInt();
+ 
+ System.out.print("Enter EB Connection Type (domestic/commercial): ");
+ String ebConnectionType = scanner.next();
+ 
+ ElectricityBill bill = new ElectricityBill(consumerNumber, consumerName, prevMonthReading, 
+currentMonthReading, ebConnectionType);
+ bill.displayBill();
+ 
+ scanner.close();
+ }
+}
